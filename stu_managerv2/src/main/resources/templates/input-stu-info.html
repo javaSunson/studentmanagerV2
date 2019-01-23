@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>后台登录-X-admin2.0</title>
+  <meta name="renderer" content="webkit|ie-comp|ie-stand">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+  <link rel="shortcut icon" th:href="@{/static/favicon.ico}" type="image/x-icon" />
+  <link rel="stylesheet" th:href="@{/static/css/font.css}">
+  <link rel="stylesheet"th:href="@{/static/css/xadmin.css}">
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script th:src="@{/static/lib/layui/layui.js}" charset="utf-8"></script>
+  <script type="text/javascript" th:src="@{/static/js/xadmin.js}"></script>
+
+    <style>
+    body{padding: 10px;}
+    input{width: 200px}
+    </style>
+</head>
+<body>
+
+<form class="layui-form layui-form-pane1" action="" lay-filter="first">
+  <div class="layui-form-item">
+    <label class="layui-form-label">学号</label>
+    <div class="layui-input-inline">
+      <input type="text" name="stu_num" id="stu_num" lay-verify="required|title"
+             required placeholder="请输入学号" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">姓名</label>
+    <div class="layui-input-inline">
+      <input type="text" name="stu_name" id="stu_name" lay-verify="required" lay-verType="tips"
+             required placeholder="请输入姓名" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">身份证号</label>
+    <div class="layui-input-inline">
+      <input type="text" name="stu_idcard" id="stu_idcard" lay-verify="required" lay-verType="tips"
+             required placeholder="请输入身份证号"
+             autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">手机号</label>
+    <div class="layui-input-inline">
+      <input type="number" name="stu_phone" id="stu_phone" lay-verify="required|number"  lay-verType="alert"
+             required placeholder="请输入手机号"
+             autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">地址</label>
+    <div class="layui-input-inline">
+      <input type="text" name="stu_address" id="stu_address"   lay-verType="alert"
+             required placeholder="请输入地址"
+             autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-input-inline">
+      <button class="layui-btn" lay-submit lay-filter="*" id="tijiao">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+<script th:inline="javascript">
+    var path = [[${#request.contextPath}]];
+</script>
+
+<script type="text/javascript">
+  $(function () {
+      $("#stu_num").change(function () {
+          // layer.msg("正在校验学号是否重复!");
+          var stu_num = $("#stu_num").val();
+          $.ajax({
+              url:path+"/stu/check",
+              data:{"stu_num":stu_num},
+              dataType:"html",
+              type:"post",
+              success:function (data) {
+                  if(data == "error"){
+                      // alert("");
+                      alert("学号以存在!")
+                  }else{
+                      // alert("");
+                  }
+              }
+          });
+      });
+      $("#tijiao").click(function () {
+          var param = $("form").serialize();
+          $.ajax({
+              url:path+"/stu/insert",
+              data:param,
+              dataType:"html",
+              type:"post",
+              success:function (data) {
+                  if(data == 'ok'){
+                      layer.msg("成功录入一条记录!");
+                  }else{
+                      layer.msg('录入失败!');
+                  }
+              }
+          });
+      });
+  });
+</script>
+<!-- <script src="../build/lay/dest/layui.all.js"></script> -->
+
+<script>
+
+layui.use('form', function(){
+  var form = layui.form;
+  
+  //自定义验证规则
+  form.verify({
+    title: function(value){
+      if(value.length < 5){
+        return '标题也太短了吧';
+      }
+    }
+    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+    ,money: [
+      /^\d+\.\b\d{2}\b$/
+      ,'金额必须为小数保留两位'
+    ]
+  });
+
+
+  
+  //事件监听
+  form.on('select', function(data){
+    console.log('select: ', this, data);
+  });
+  
+  form.on('select(quiz)', function(data){
+    console.log('select.quiz：', this, data);
+  });
+  
+  form.on('select(interest)', function(data){
+    console.log('select.interest: ', this, data);
+  });
+  
+  
+  
+  form.on('checkbox', function(data){
+    console.log(this.checked, data.elem.checked);
+  });
+  
+  form.on('switch', function(data){
+    console.log(data);
+  });
+  
+  form.on('radio', function(data){
+    console.log(data);
+  });
+  
+  //监听提交
+  form.on('submit(*)', function(data){
+    console.log(data)
+    alert(JSON.stringify(data.field));
+    return false;
+  });
+  
+});
+
+</script>
+
+<script>
+layui.use('jquery', function(){
+  var $ = layui.jquery;
+  var submit = function(){
+    return false;
+  };
+  $('#test').on('submit', function(){
+     return false
+  });
+  $('#test').on('submit', function(){
+     return true
+  });
+});
+</script>
+</body>
+</html>

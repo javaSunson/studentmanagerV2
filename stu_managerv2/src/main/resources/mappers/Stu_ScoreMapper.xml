@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmwl.dao.Stu_ScoreMapper">
+    <select id="getAllStuScore"  resultType="stu_Score">
+        select * from stu_score
+    </select>
+    <select id="score_Count" resultType="int">
+        select count(*) from stu_score
+    </select>
+    <insert id="insertScore" parameterType="stu_Score">
+        insert into stu_score values(
+        default ,
+        #{stu_num},
+        #{stu_name},
+        #{score1},
+        #{score2},
+        #{score3},
+        #{score4},
+        #{score5},
+        #{score6},
+        #{score7},
+        #{score8},
+        #{scoresum},
+        #{scoreave}
+        );
+    </insert>
+    <select id="checkScoreExist" parameterType="string" resultType="stu_Score">
+        select * from stu_score
+        where stu_num = #{stu_num}
+    </select>
+
+    <delete id="deleteScoreSingle" parameterType="string">
+        delete from stu_score
+        where stu_num = #{stu_num}
+    </delete>
+    <update id="changeScore" parameterType="stu_Score">
+        update stu_score set
+        stu_name = #{stu_name},
+        score1 = #{score1},
+        score2 = #{score2},
+        score3 = #{score3},
+        score4 = #{score4},
+        score5 = #{score5},
+        score6 = #{score6},
+        score7 = #{score7},
+        score8 = #{score8},
+        scoresum = #{scoresum},
+        scoreave = #{scoreave}
+        where stu_num = #{stu_num}
+    </update>
+    <insert id="batchInsertScore" parameterType="list">
+        insert into stu_score(stu_num,stu_name,score1,score2,score3,score4,score5,score6,score7,score8,
+        scoresum,scoreave)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.stu_num},#{item.stu_name},#{item.score1},
+            #{item.score2},#{item.score3},#{item.score4},
+            #{item.score5},#{item.score6},#{item.score7},
+            #{item.score8},#{item.scoresum},#{item.scoreave})
+        </foreach>
+    </insert>
+</mapper>

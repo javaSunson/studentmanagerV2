@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html>
+  <!--修改学生成绩模态窗口-->
+  <head>
+    <meta charset="UTF-8">
+    <title>虹梦教育系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="shortcut icon" th:href="@{/static/favicon.ico}" type="image/x-icon" />
+    <link rel="stylesheet" th:href="@{/static/css/font.css}">
+    <link rel="stylesheet" th:href="@{/static/css/xadmin.css}">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/static/lib/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/static/js/xadmin.js}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  
+  <body>
+    <div class="x-body">
+        <form class="layui-form">
+          <!--<div class="layui-form-item">-->
+              <!--<label for="auth_id" class="layui-form-label">-->
+                  <!--<span class="x-red">*</span>id-->
+              <!--</label>-->
+              <!--<div class="layui-input-inline">-->
+                  <!--<input type="text" id="auth_id" name="auth_id" required="" lay-verify="required"-->
+                  <!--autocomplete="off" class="layui-input">-->
+              <!--</div>-->
+
+          <!--</div>-->
+            <div class="layui-form-item">
+              <label for="stu_num" class="layui-form-label">
+                  <span class="x-red">*</span>学号
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="stu_num" name="stu_num" th:value="${param.stu_num}" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label for="stu_name" class="layui-form-label">
+                  <span class="x-red">*</span>姓名
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="stu_name" name="stu_name" th:value="${param.stu_name}" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input" >
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label for="score1" class="layui-form-label">
+                  <span class="x-red">*</span>学科1
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="score1" name="score1" th:value="${param.score1}" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label for="score2" class="layui-form-label">
+                  <span class="x-red">*</span>学科2
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="score2" name="score2" th:value="${param.score2}" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label for="score3" class="layui-form-label">
+                  <span class="x-red">*</span>学科3
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="score3" name="score3" th:value="${param.score3}" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label for="score4" class="layui-form-label">
+                  <span class="x-red">*</span>学科4
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="score4" name="score4" th:value="${param.score4}" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label for="score5" class="layui-form-label">
+                  <span class="x-red">*</span>学科5
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="score5" name="score5" th:value="${param.score5}" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label for="score6" class="layui-form-label">
+                  <span class="x-red">*</span>学科6
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="score6" name="score6" th:value="${param.score6}" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label for="score7" class="layui-form-label">
+                  <span class="x-red">*</span>学科7
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="score7" name="score7" th:value="${param.score7}" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label for="score8" class="layui-form-label">
+                  <span class="x-red">*</span>学科8
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="score8" name="score8" th:value="${param.score8}" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid layui-word-aux">
+                  <span class="x-red">*</span>
+              </div>
+          </div>
+
+            <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label">
+                </label>
+                <button  class="layui-btn btn-success" lay-filter="add" lay-submit="" id= "L_repass">
+                    <!--<span th:if="${param.id eq null}">增加</span>-->
+                    <span>录入</span>
+                </button>
+
+            </div>
+
+          <!--<div class="layui-form-item">-->
+              <!--<label class="layui-form-label"><span class="x-red">*</span>角色</label>-->
+              <!--<div class="layui-input-block">-->
+                <!--<input type="checkbox" name="like1[write]" lay-skin="primary" title="超级管理员" checked="">-->
+                <!--<input type="checkbox" name="like1[read]" lay-skin="primary" title="编辑人员">-->
+                <!--<input type="checkbox" name="like1[write]" lay-skin="primary" title="宣传人员" checked="">-->
+              <!--</div>-->
+          <!--</div>-->
+
+
+      </form>
+    </div>
+    <script th:inline="javascript">
+        var path = [[${#request.contextPath}]];
+    </script>
+    <script>
+        layui.use(['form','layer'], function(){
+            $ = layui.jquery;
+          var form = layui.form
+          ,layer = layui.layer;
+
+          //监听提交
+          form.on('submit(add)', function(data){
+            // console.log(data);
+              var param = data.field;
+              $.ajax({
+                  url:path+"/score/insertTools",
+                  data:param,
+                  type:"post",
+                  dataType:"html",
+                  success:function (data) {
+                      if(data == "ok"){
+                          //发异步，把数据提交给
+                          layer.alert("操作成功", {icon: 6},function () {
+                              // 获得frame索引
+                              var index = parent.layer.getFrameIndex(window.name);
+                              //关闭当前frame
+                              parent.layer.close(index);
+                              parent.location.reload();
+                          });
+                      }else{
+                          layer.alert("操作失败!");
+                      }
+                  }
+              });
+
+            return false;
+          });
+          
+          
+        });
+    </script>
+  </body>
+
+</html>

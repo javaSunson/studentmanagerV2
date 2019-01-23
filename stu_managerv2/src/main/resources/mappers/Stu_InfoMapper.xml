@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmwl.dao.Stu_InfoMapper">
+    <select id="getAllStuInfo"  resultType="stu_Info">
+        select * from stu_info
+    </select>
+    <select id="stu_Count" resultType="int">
+        select count(*) from stu_info
+    </select>
+    <select id="checkNumExist" parameterType="string" resultType="stu_info">
+        select * from stu_info
+        where stu_num = #{stu_num}
+    </select>
+    <insert id="insertStuInfo" parameterType="stu_Info">
+        insert into stu_info (stu_num,stu_name,stu_idcard,stu_phone,stu_address,stu_img) values(
+        #{stu_num},
+        #{stu_name},
+        #{stu_idcard},
+        #{stu_phone},
+        #{stu_address},
+        #{stu_img}
+        );
+    </insert>
+    <delete id="deleteInfoByStuNum" parameterType="string">
+        delete from stu_info where stu_num = #{stu_num}
+    </delete>
+    <update id="changeStudentInfo" parameterType="stu_Info">
+        update stu_info set
+        stu_name = #{stu_name},
+        stu_idcard = #{stu_idcard},
+        stu_phone = #{stu_phone},
+        stu_address = #{stu_address},
+        stu_img = #{stu_img}
+        where  stu_num = #{stu_num}
+    </update>
+    <insert id="batchInsertStudent" parameterType="list">
+        insert into stu_info (stu_num,stu_name,stu_idcard,stu_address,
+        stu_phone,stu_img)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+        (#{item.stu_num},#{item.stu_name},#{item.stu_idcard},#{item.stu_address},
+        #{item.stu_phone},#{item.stu_img})
+        </foreach>
+    </insert>
+</mapper>

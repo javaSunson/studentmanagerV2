@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmwl.dao.AuthMapper">
+    <select id="getAllAuths" resultType="map">
+      select auth_id as id,parent_id as pid,
+      auth_name,auth_desc,auth_code,auth_layer,auth_type,orders,is_valid,auth_url
+      from sys_auth
+      order by auth_layer,orders
+    </select>
+    <select id="getAllAuthsFilterAuth" parameterType="int" resultType="map">
+         select auth_id as id,parent_id as pid,
+         auth_name,auth_desc,auth_code,auth_layer,auth_type,orders,is_valid,auth_url
+         from sys_auth
+         where auth_id = #{auth_id}
+         order by auth_layer,orders
+    </select>
+
+    <select id="countAuth" resultType="int">
+      select count(*) from sys_auth
+    </select>
+
+    <select id="countAuthFilterRole" parameterType="int" resultType="int">
+      select count(sa.auth_id)
+      from sys_auth sa join sys_role_auth sra
+      on(sa.auth_id = sra.auth_id)
+      where sra.role_id = #{role_id}
+      </select>
+
+    <insert id="addAuth" parameterType="sys_Auth">
+      insert into sys_auth values(
+      default,#{auth_name},#{auth_code},#{auth_desc},#{auth_layer},
+      #{auth_url},#{parent_id},#{orders},#{auth_type},0 )
+    </insert>
+    <update id="editAuth" parameterType="sys_Auth">
+        update sys_auth set
+        auth_name = #{auth_name},
+        auth_desc = #{auth_desc},
+        auth_code = #{auth_code},
+        auth_layer= #{auth_layer},
+        auth_type= #{auth_type},
+        orders = #{orders},
+        auth_url = #{auth_url},
+        parent_id = #{parent_id}
+        where auth_id = #{aurh_id}
+    </update>
+    <update id="toggleAuth" parameterType="map">
+        update sys_auth set is_valid = #{is_valid}
+        where auth_id = #{auth_id}
+    </update>
+   <delete id="toggleAuthByRole" parameterType="map">
+       delete from sys_role_auth
+       where role_id = #{role_id} and auth_id = #{auth_id}
+   </delete>
+    <select id="getAuthByRoleID" parameterType="int" resultType="map">
+        select sra.auth_id,an.auth_name
+        from sys_role_auth sra join sys_auth an on(sra.auth_id = an.auth_id)
+    </select>
+    <select id="getSingleAuthByRoleID" parameterType="int" resultType="sys_Auth">
+        select *
+        from sys_auth
+        where auth_id = #{auth_id}
+    </select>
+    <select id="getRoleAuthBYRoleID" parameterType="int" resultType="sys_Role_Auth">
+        select * from sys_role_auth
+        where role_id = #{role_id}
+    </select>
+    <insert id="addRoleAuth" parameterType="map">
+        insert into sys_role_auth
+        (auth_id,role_id)
+        values(#{auth_id},#{role_id})
+    </insert>
+</mapper>
